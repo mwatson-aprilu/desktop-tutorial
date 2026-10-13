@@ -65,7 +65,7 @@ if(gcd1 == 1):
 ~~~
 这样我们就解出了正确的flag   
 最终的flag为 b'NSSCTF{xxxxx******xxxxx}'  
-###最终代码：
+###最终代码：   
 ~~~
 from Crypto.Util.number import *
 from gmpy2 import invert
