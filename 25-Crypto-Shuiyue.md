@@ -126,11 +126,20 @@ a+2 & a+3 & \cdots & a+n & a+1
 \end{pmatrix}
 $$
 
-由分析:
-$$  
+由分析： 
+$E(A) = E ( a+ J）$
+$$
+J =\begin{pmatrix}
+1 & 2 & \cdots & n-1 & n \\
+n & 1 & \cdots & n-2 & n-1 \\
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+3 & 4 & \cdots & 1 & 2 \\
+2 & 3 & \cdots & n & 1 
+\end{pmatrix}
+$$
 
 其中 $a_{ij}=a+1+((j-i)\bmod n)$。
-A = (a + c_{ij}) = a \cdot J + C 
+$A = (a + c_{ij}) = a \cdot J + C$
 ## 2.知识学习 AMM算法
 学习来源：[AMM算法](https://blog.csdn.net/orange_484/article/details/148844227) 
 
