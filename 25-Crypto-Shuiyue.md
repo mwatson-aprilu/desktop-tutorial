@@ -116,7 +116,7 @@ print(A.det())
 ~~~
 ### 题目分析  
 题目中给出的矩阵： 
-$$ 
+$$   
 A =\begin{pmatrix}
 a+1 & a+2 & \cdots & a+n-1 & a+n\\
 a+n & a+1 & \cdots & a+n-2 & a+n-1 \\
@@ -127,7 +127,7 @@ a+2 & a+3 & \cdots & a+n & a+1
 $$
 
 由分析:
-$$
+$$  
 A = (a + c_{ij}) = a \cdot J + C 
 ## 2.知识学习 AMM算法
 学习来源：[AMM算法](https://blog.csdn.net/orange_484/article/details/148844227) 
