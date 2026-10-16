@@ -158,7 +158,8 @@ a = adet//mid - 260
 flag = long_to_bytes(a)
 print(flag)
 ~~~
-<img width="390" height="100" alt="image" src="https://github.com/user-attachments/assets/507ffa2a-595f-4bcc-a962-6815ca94d029" />
+<img width="390" height="100" alt="image" src="https://github.com/user-attachments/assets/507ffa2a-595f-4bcc-a962-6815ca94d029" />    
+  
 得到flag：   
 ~~~python
 moectf{m4ny_m37h0d5_2_c4lcul473_7h3_det_0f_a_cycl1c_m47r1x}
