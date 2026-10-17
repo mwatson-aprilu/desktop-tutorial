@@ -167,4 +167,5 @@ moectf{m4ny_m37h0d5_2_c4lcul473_7h3_det_0f_a_cycl1c_m47r1x}
 
 ## 2.知识学习 AMM算法
 学习来源：[AMM算法](https://blog.csdn.net/orange_484/article/details/148844227) 
-
+个人学习笔记：[个人笔记](https://ycn16g80xv5r.feishu.cn/wiki/VRcYwiE8Gixkf4kb00ccRPUbn0e)
+笔记和题目正在完善中...(●'◡'●)
