@@ -198,10 +198,24 @@ c = 1216233384536522233331736473845829010149643674649644083707595249484105773883
 ~~~
 
 ### 题目分析
- assert pow(p,(r-1)//2,r)==1 是欧拉准则 ⟹ p 是模 r 的二次剩余
- 题目中还给出了 a ≡ p² (mod r)，且 r ≡ 3 (mod 4)，模 r 开方有显式公式：x ≡ ±a^((r+1)/4) (mod r)
- r ≡ 3 (mod 4) 时 x 与 r−x 恰有一个是 QR，用欧拉准则选出它 ⟹ 唯一确定 p mod r    
- r > 2^1023 而 p < 2^1024 < 2r，故 p ∈ {x, x+r}，用 n % p == 0 验证即分解 n，正常解 RSA        
+# HDCTF Crypto —— 一道"自己把钥匙交出来"的 RSA 题
+
+## 拿到题先看代码
+
+```python
+r = getPrime(1024); assert r % 4 == 3
+p = getPrime(1024); assert pow(p, (r-1)//2, r) == 1
+q = getPrime(1024); n = p*q; e = 65537
+a = pow(p, 2, r)
+c = pow(m, e, n)
+```
+
+** 题目特意 assert r % 4 == 3，这等于举着喇叭喊"用我开方"。4k+3 型素数开平方就是一个公式的事：
+> x ≡ ±a^((r+1)/4) (mod r)
+
+考虑到这个开方开出来有 ±x 两个根，我们选哪个呢？题目第二行 assert 告诉我们pow(p,(r-1)//2,r)==1 是欧拉准则，就是p 是模 r 的二次剩余。而 r ≡ 3 (mod 4) 时，x 和 r−x 里头恰好只有一个是二次剩余——老天爷都帮我们消歧了，验一下欧拉准则，直接锁定。
+然后现在手里是 p mod r。r 和 p 都是 1024 位，而且 r > 2^1023，所以 p < 2^1024 < 2r——p 要么是 x，要么是 x+r，总共两个候选。拿 n % p == 0 试一试，p 就到手了，然后我们常规地求 d、解密、转字节，flag 出锅。
+
 ### 解题代码
 ~~~python
 import random
@@ -258,12 +272,12 @@ d = inverse_mod(e, phi)
 m = power_mod(c, d, n)
 flag = int(m).to_bytes((int(m).bit_length() + 7) // 8, "big")
 print(flag)
-~~~
-
+~~~     
+      
 ###运行结果与flag
-<img width="540" height="268" alt="image" src="https://github.com/user-attachments/assets/1c9de148-7a81-453f-a559-990fa69b06c6" />
-最终的flag:   
-~~~python
+<img width="540" height="268" alt="image" src="https://github.com/user-attachments/assets/1c9de148-7a81-453f-a559-990fa69b06c6" />       
+最终的flag:       
+~~~python   
 b'HDCTF{0ce04f81-516b-4132-81a2-b0b7166e03ad}'
 ~~~
 
