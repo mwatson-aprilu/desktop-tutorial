@@ -59,3 +59,6 @@ flag 是
 b'flag{H0w_Fun_13_HAstads_broadca5t_AtTack!}
 ~~~
 
+# 学习笔记补充
+
+上次AMM算法多次情况下的推导还没有完成...
