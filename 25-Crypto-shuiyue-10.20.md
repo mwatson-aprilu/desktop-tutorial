@@ -32,10 +32,10 @@ print("c_list:",c_list)
 这题给出了9个n,9个c，与中国剩余定理有关。   
 我们首先回顾**中国剩余定理**  ：   
 ![中国剩余定理1](https://github.com/user-attachments/assets/03f05a12-3234-41b5-98c3-65d912a26f69)
-![中国剩余定理1](https://github.com/user-attachments/assets/ec93ef2b-6086-469f-a55f-bc31fb2ea536)
-（这个是原来的笔记的一部分）   
- 对于这题我们可以直接使用crt(n_list,c_list)    
-### 代码书写   
+![中国剩余定理1](https://github.com/user-attachments/assets/ec93ef2b-6086-469f-a55f-bc31fb2ea536)      
+(这个是我原来的笔记的一部分)       
+对于这题我们可以直接使用crt(n_list,c_list)    
+### 代码书写     
 ~~~python
 from Crypto.Util.number import *
 from gmpy2 import iroot
@@ -50,10 +50,10 @@ if exact:
   print(flag)
 ~~~
 
-### 运行结果
-![结果(不是，怎么这么大一片空白...)](https://github.com/user-attachments/assets/00849be2-4bef-4373-84b0-96a1fcaac1d9)
+### 运行结果       
+![结果(不是，怎么这么大一片空白...)](https://github.com/user-attachments/assets/00849be2-4bef-4373-84b0-96a1fcaac1d9)      
    
-考虑到题目中有对Flag填充，故而我们不用管最后}后面的一坨,直接截取前面的作为最后的flag.     
+考虑到题目中有对Flag填充，故而我们不用管最后}后面的一坨,直接截取前面的作为最后的flag.       
 flag 是  
 ~~~python
 b'flag{H0w_Fun_13_HAstads_broadca5t_AtTack!}
