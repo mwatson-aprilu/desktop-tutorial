@@ -31,8 +31,7 @@ print("c_list:",c_list)
 ### 题目分析   
 这题给出了9个n,9个c，与中国剩余定理有关。   
 我们首先回顾**中国剩余定理**  ：   
-![中国剩余定理1](https://github.com/user-attachments/assets/03f05a12-3234-41b5-98c3-65d912a26f69)
-![中国剩余定理1](https://github.com/user-attachments/assets/ec93ef2b-6086-469f-a55f-bc31fb2ea536)      
+![CRT](./docs/images/Screenshot 2026-10-20 154640.png)
 (这个是我原来的笔记的一部分)       
 对于这题我们可以直接使用crt(n_list,c_list)    
 ### 代码书写     
