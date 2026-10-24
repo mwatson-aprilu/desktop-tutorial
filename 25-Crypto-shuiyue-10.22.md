@@ -183,7 +183,7 @@ while True:
 笔记完善：  [AMM算法](https://ycn16g80xv5r.feishu.cn/wiki/VRcYwiE8Gixkf4kb00ccRPUbn0e)
 
 # 极客大挑战      
-是不是有点太'简单'了(QaQ)    
+~~是不是有点太'简单'了(QaQ)~~  好吧，是我没看到条件...    
 
 ##  哈基米与大狗嚼(AES.CTR)
 ### 题目代码    
