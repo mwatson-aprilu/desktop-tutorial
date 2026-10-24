@@ -217,7 +217,7 @@ Juliet = bytes(S1^^c for S1,c in zip(S,c2))
 print(Juliet.decode("utf-8"))
 ~~~
 ### 运行结果   
-![运行结果]("https://github.com/user-attachments/assets/ef8a6063-1e54-4332-8b13-38aef5e27d2d")          
+![运行结果](https://github.com/user-attachments/assets/ef8a6063-1e54-4332-8b13-38aef5e27d2d)          
 ~~~python      
 老地方见，暗号是 SYC{black_dog_and_white_cat}。让我们一起改变这个世界
 ~~~      
