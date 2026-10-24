@@ -223,7 +223,7 @@ print(Juliet.decode("utf-8"))
 ~~~      
 这样我们就得到了flag.       
       
-## Quadratic Shadow    (二次剩余)
+## Quadratic Shadow    (假的二次剩余，好像什么都不需要...)
 ~~~python
 from sage.all import ZZ, is_prime
 from hashlib import sha256
@@ -267,11 +267,15 @@ ct = a37cc37e731f166ebcfaf0e005858cb90c443de1cdc5c22ea390adc358dedc96c07ac564711
 ~~~
 
 ###  题目分析       
-题目中的x,k都是可以直接得到的，而ct是m与key的前一部分(与m等长)异或得到的，题目还补充告诉我们p是素数,p模4余3，且        
-$$c \equiv x^2 \pmod p$$
+题目中的x,k都是可以直接得到的，而ct是m与key(的循环)异或得到的，题目还补充告诉我们p是素数,p模4余3，且        
+$$ c \equiv x^2 \pmod p $$     
+(有点像二次剩余)，这种情况下有:$x \equiv c^{\frac{x+1}{4}} \pmod p$，另一个解是 $-x \equiv p-x \pmod p$       
+但是这里的x ,c,p貌似都已知...     
+那我先回到key,这边$key \oplus ct = m$,说不定就这样就好了，我先试一下：     
 
 ### 解题代码      
 ~~~python
+from Crypto.Util.number import *
 from hashlib import sha256
 p = 115792089237316195423570985008687907853269984665640564039457584007913129639319
 c = 115099552378053773561600805027724127595796638481650476626999444767493861143197
@@ -282,9 +286,18 @@ x = ZZ(int.from_bytes(
 ) % (p - 1) + 1)
 #print(x)
 #108065791321956378604705304731818008043610974348047179968196353228821182508324
+ct1 = bytes_to_long(ct)
 key = sha256(str(x).encode()).digest()
-
+print(key)
+flag = bytes(ct[i] ^^ key[i % len(key)] for i in range(len(ct)))
+print(flag) 
 ~~~
+[运行情况](https://github.com/user-attachments/assets/d71e8153-2dc2-4d4a-a7e0-89164a05fe1d")
+最后的结果是：
+~~~python
+b'SYC{quadratic_residue_Cryp0_1s_S0_Easy}'
+~~~       
+(我的妈呀，竟然直接出来了，原来是虚张声势。。。)        
 
 
 
