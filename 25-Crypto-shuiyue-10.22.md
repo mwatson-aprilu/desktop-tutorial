@@ -291,8 +291,8 @@ key = sha256(str(x).encode()).digest()
 print(key)
 flag = bytes(ct[i] ^^ key[i % len(key)] for i in range(len(ct)))
 print(flag) 
-~~~
-![运行情况](https://github.com/user-attachments/assets/d71e8153-2dc2-4d4a-a7e0-89164a05fe1d")
+~~~      
+![运行情况](https://github.com/user-attachments/assets/d71e8153-2dc2-4d4a-a7e0-89164a05fe1d")      
 最后的结果是：
 ~~~python
 b'SYC{quadratic_residue_Cryp0_1s_S0_Easy}'
