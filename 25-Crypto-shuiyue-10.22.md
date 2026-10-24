@@ -53,7 +53,7 @@ if exact:
 ### 运行结果       
 ![结果(不是，怎么这么大一片空白...)](https://github.com/user-attachments/assets/00849be2-4bef-4373-84b0-96a1fcaac1d9)      
    
-考虑到题目中有对Flag填充，故而我们不用管最后}后面的一坨,直接截取前面的作为最后的flag.       
+考虑到题目中有对Flag填充，故而我们不用管最后'}'后面的一坨,直接截取前面的作为最后的flag.       
 flag 是  
 ~~~python
 b'flag{H0w_Fun_13_HAstads_broadca5t_AtTack!}
@@ -76,7 +76,7 @@ print(f"n = {n}")
 print(f"e = {e}")
 print(f"c = {c}")
 ~~~    
-看题目 ,这里比较明显d远小于的$$\frac{1}{3} *N^\frac{1}{4}$$次方，故而可以考虑Wiener攻击.    
+看题目 ,这里比较明显d远小于的 $$\frac{1}{3} *N^\frac{1}{4}$$ 次方，故而可以考虑Wiener攻击.    
 我们重新推理一下维纳攻击:         
 [Wiener_Attack](https://ycn16g80xv5r.feishu.cn/wiki/H9hnwzxPTi1eAYkVUHFcZmGCnkc?from=from_copylink)     
 我们尝试一下      
@@ -206,8 +206,8 @@ c2 = a8da4220dea70ed4318ec7721d8c4bdf579dba42556c045eaa39432034e85048f7220ff836b
 
 ### 题目分析
 这个题目很明显是对称加密中的CTR，两次加密中用到了同样的key和 nounce，又由于：        
-$$c1 = Romio \oplus S1,c2 = Juliet \oplus S2$$            
-故而S1 = S2.(OS：然后怎么做呢...)
+ $$c1 = Romio \oplus S1,c2 = Juliet \oplus S2$$           
+故而 $$S1 = S2$$ .(OS：然后怎么做呢...)
 突然发现题干中的故事给出了Romio消息的明文,所以我们是可以通过Romio异或c1得到S，然后再通过S异或c2得到Juliet.(真没看见,卡了有一段时间...)     
 我们来试一下：     
 ~~~python
@@ -270,10 +270,10 @@ ct = a37cc37e731f166ebcfaf0e005858cb90c443de1cdc5c22ea390adc358dedc96c07ac564711
 
 ###  题目分析       
 题目中的x,k都是可以直接得到的，而ct是m与key(的循环)异或得到的，题目还补充告诉我们p是素数,p模4余3，且        
-$$ c \equiv x^2 \pmod p $$     
-(有点像二次剩余)，这种情况下有:$x \equiv c^{\frac{x+1}{4}} \pmod p$，另一个解是 $-x \equiv p-x \pmod p$       
+ $$c \equiv x^2 \pmod p$$    
+(有点像二次剩余)，这种情况下有: $x \equiv c^{\frac{x+1}{4}} \pmod p$ ，另一个解是 $-x \equiv p-x \pmod p$       
 但是这里的x ,c,p貌似都已知...     
-那我先回到key,这边$key \oplus ct = m$,说不定就这样就好了，我先试一下：     
+那我先回到key,这边 $key \oplus ct = m$ ,说不定就这样就好了，我先试一下：     
 
 ### 解题代码      
 ~~~python
@@ -299,7 +299,8 @@ print(flag)
 ~~~python
 b'SYC{quadratic_residue_Cryp0_1s_S0_Easy}'
 ~~~       
-(我的妈呀，竟然直接出来了，原来是虚张声势。。。)        
+(我的妈呀，竟然直接出来了，原来是虚张声势。。。)           
+
    后面的题目正在写，我先提交试一试这次的图片行不行...
 
 
