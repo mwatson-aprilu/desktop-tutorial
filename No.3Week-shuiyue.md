@@ -20,6 +20,8 @@ if(is_prime(n)):
   print(flag)
 ~~~
 ### 运行展示    
+
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/week3.NSSCTF1.png)
 ### 最终 flag
 ~~~python 
 NSSCTF{1s_it_tru3_th4t_r3cru1tm3nt_ha5_started?}
@@ -56,6 +58,7 @@ m = pow(c,d,n)
 print(long_to_bytes(m))
 ~~~
 ### 运行情况  
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.NSSCTF2.png)
 ### 最终的结果
 ~~~plaintext 
 NSSCTF{p_4nd_q_4r3_t00_cl0s3_f3rm4t_w1ns}
@@ -115,7 +118,7 @@ assert exact
 print(m.to_bytes((m.bit_length()+7)//8, 'big'))
 ~~~
 ### 运行展示
-
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.NSSCTF3.png)
 ### 最终的flag
 ~~~python
 NSSCTF{c0mm0n_m'0dulus_4nd_h4st4d_br0adc4st_4r3_b0th_cl4ss1c_c0mb1n1ng_th3m_m4k3s_4_n1c3_m3d1um_ch4ll3ng3}
