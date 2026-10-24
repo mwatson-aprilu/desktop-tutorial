@@ -114,3 +114,9 @@ m, exact = integer_nthroot(int(M3), 3)
 assert exact                    
 print(m.to_bytes((m.bit_length()+7)//8, 'big'))
 ~~~
+### 运行展示
+
+### 最终的flag
+~~~python
+NSSCTF{c0mm0n_m'0dulus_4nd_h4st4d_br0adc4st_4r3_b0th_cl4ss1c_c0mb1n1ng_th3m_m4k3s_4_n1c3_m3d1um_ch4ll3ng3}
+~~~
