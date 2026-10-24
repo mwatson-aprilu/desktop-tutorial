@@ -76,7 +76,7 @@ print(f"n = {n}")
 print(f"e = {e}")
 print(f"c = {c}")
 ~~~    
-看题目 ,这里比较明显d远小于的$\frac{1}{3} *N^\frac{1}{4}$次方，故而可以考虑Wiener攻击.    
+看题目 ,这里比较明显d远小于的$$\frac{1}{3} *N^\frac{1}{4}$$次方，故而可以考虑Wiener攻击.    
 我们重新推理一下维纳攻击:         
 [Wiener_Attack](https://ycn16g80xv5r.feishu.cn/wiki/H9hnwzxPTi1eAYkVUHFcZmGCnkc?from=from_copylink)     
 我们尝试一下      
