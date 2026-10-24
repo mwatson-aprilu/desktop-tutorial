@@ -34,7 +34,7 @@ print("c_list:",c_list)
 ![CRT1](https://github.com/user-attachments/assets/46446b7e-3c6c-409f-9418-3c45748bd97d)       
 ![CRT2](https://github.com/user-attachments/assets/356eaf0f-43c5-4232-a24d-9b304adf518f)       
 (这个是我原来的笔记的一部分)       
-对于这题我们可以直接使用 $crt(n_list,c_list)$      
+对于这题我们可以直接使用 *crt(n_list,c_list)*     
 ### 代码书写     
 ~~~python
 from Crypto.Util.number import *
