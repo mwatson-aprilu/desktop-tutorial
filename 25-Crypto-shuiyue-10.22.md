@@ -31,7 +31,8 @@ print("c_list:",c_list)
 ### 题目分析   
 这题给出了9个n,9个c，与中国剩余定理有关。   
 我们首先回顾**中国剩余定理**  ：   
-![CRT](./docs/images/Screenshot 2026-10-20 154640.png)
+![CRT1](https://github.com/user-attachments/assets/46446b7e-3c6c-409f-9418-3c45748bd97d)       
+![CRT2](https://github.com/user-attachments/assets/356eaf0f-43c5-4232-a24d-9b304adf518f)       
 (这个是我原来的笔记的一部分)       
 对于这题我们可以直接使用crt(n_list,c_list)    
 ### 代码书写     
@@ -76,7 +77,8 @@ print(f"e = {e}")
 print(f"c = {c}")
 ~~~    
 看题目 ,这里比较明显d远小于的$\frac{1}{3} *N^\frac{1}{4}$次方，故而可以考虑Wiener攻击.    
-我们重新推理一下维纳攻击:[Wiener_Attack](https://ycn16g80xv5r.feishu.cn/wiki/H9hnwzxPTi1eAYkVUHFcZmGCnkc?from=from_copylink)     
+我们重新推理一下维纳攻击:         
+[Wiener_Attack](https://ycn16g80xv5r.feishu.cn/wiki/H9hnwzxPTi1eAYkVUHFcZmGCnkc?from=from_copylink)     
 我们尝试一下      
 ~~~python
 from math import isqrt
@@ -129,7 +131,8 @@ b'hgame{dO|YOU:kNOw!tHE*PRINcIplE*bEhInd%WInNEr#aTTacK}'
 
 
 # 学习笔记补充
-## p-1光滑问题学习     
+## p-1光滑问题学习    
+[Pollard(p-1)Attack](https://ycn16g80xv5r.feishu.cn/wiki/AnxvwXBygiqwqfk1VTecI9GunKf?from=from_copylink)
 ~~~python       
 from random import choice
 from Crypto.Util.number import isPrime, sieve_base as primes
@@ -297,7 +300,7 @@ print(flag)
 b'SYC{quadratic_residue_Cryp0_1s_S0_Easy}'
 ~~~       
 (我的妈呀，竟然直接出来了，原来是虚张声势。。。)        
-
+   后面的题目正在写，我先提交试一试这次的图片行不行...
 
 
 
