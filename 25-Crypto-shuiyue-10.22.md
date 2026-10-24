@@ -179,3 +179,115 @@ while True:
 
 上次AMM算法多次情况下的推导还没有完成...
 笔记完善：  [AMM算法](https://ycn16g80xv5r.feishu.cn/wiki/VRcYwiE8Gixkf4kb00ccRPUbn0e)
+
+# 极客大挑战      
+是不是有点太'简单'了(QaQ)    
+
+##  哈基米与大狗嚼(AES.CTR)
+### 题目代码    
+~~~python    
+import os
+from Crypto.Cipher import AES
+from secret import romio, juliet
+
+key = os.urandom(16)
+nonce = b"dormitory"
+
+c1 = AES.new(key, AES.MODE_CTR, nonce=nonce).encrypt(romio)
+c2 = AES.new(key, AES.MODE_CTR, nonce=nonce).encrypt(juliet)
+print("c1 =", c1.hex())
+print("c2 =", c2.hex())
+#拼接
+c1 = a4e14923db8d0dec3d81c67217a049d67186b74d636f00416cfca384d50ed9bf23afe315b1663adfa7393b267daff8b5219dedb3d03a21f721f2bc371cbc0c669a13b1a2221d8263a0fa5172adeab519a415d6e1f43af1d726ea8b7293da2c51ab8efc454a16947762b36ce1f1f08b4d5633d31ff1
+c2 = a8da4220dea70ed4318ec7721d8c4bdf579dba42556c045eaa39432034e85048f7220ff836bfdc5175d182d984201059965111212e6a49c256b8a8717c825c3eb675ecaa61409b2cd3da091ab9a9ed1ac449c6bfa92387a524
+~~~         
+
+### 题目分析
+这个题目很明显是对称加密中的CTR，两次加密中用到了同样的key和 nounce，又由于：        
+$$c1 = Romio \oplus S1,c2 = Juliet \oplus S2$$            
+故而$S1 = S2$.(OS：然后怎么做呢...)
+突然发现题干中的故事给出了Romio消息的明文,所以我们是可以通过Romio异或c1得到S，然后再通过S异或c2得到Juliet.(真没看见,卡了有一段时间...)     
+我们来试一下：     
+~~~python
+c1 = bytes.fromhex("a4e14923db8d0dec3d81c67217a049d67186b74d636f00416cfca384d50ed9bf23afe315b1663adfa7393b267daff8b5219dedb3d03a21f721f2bc371cbc0c669a13b1a2221d8263a0fa5172adeab519a415d6e1f43af1d726ea8b7293da2c51ab8efc454a16947762b36ce1f1f08b4d5633d31ff1")
+c2 = bytes.fromhex("a8da4220dea70ed4318ec7721d8c4bdf579dba42556c045eaa39432034e85048f7220ff836bfdc5175d182d984201059965111212e6a49c256b8a8717c825c3eb675ecaa61409b2cd3da091ab9a9ed1ac449c6bfa92387a524")
+Romio = ("今晚宵禁后，老地方的喷泉边，我有话想跟你说。别让白猫的人发现，我会甩开黑犬的").encode("utf-8")
+S = bytes(c^^romio for c,romio in zip(c1,romio))
+Juliet = bytes(S1^^c for S1,c in zip(S,c2))
+print(Juliet.decode("utf-8"))
+~~~
+### 运行结果  
+[运行结果]("https://github.com/user-attachments/assets/ef8a6063-1e54-4332-8b13-38aef5e27d2d")          
+~~~python      
+老地方见，暗号是 SYC{black_dog_and_white_cat}。让我们一起改变这个世界
+~~~      
+这样我们就得到了flag.       
+      
+## Quadratic Shadow    (二次剩余)
+~~~python
+from sage.all import ZZ, is_prime
+from hashlib import sha256
+
+flag = b"?"
+m = bytes(flag)
+
+p = 115792089237316195423570985008687907853269984665640564039457584007913129639319
+
+
+x = ZZ(int.from_bytes(
+    sha256(b"quadratic-shadow-secret").digest(),
+    "big"
+) % (p - 1) + 1)
+
+
+c = (x * x) % p
+
+
+key = sha256(str(x).encode()).digest()
+ct = bytes(
+    m[i] ^ key[i % len(key)]
+    for i in range(len(m))
+)
+
+print("p =", p)
+print("c =", c)
+print("ct =", ct.hex())
+
+
+
+assert is_prime(p)
+assert p % 4 == 3
+assert pow(int(x), 2, int(p)) == int(c)
+
+
+#data
+"""p = 115792089237316195423570985008687907853269984665640564039457584007913129639319
+c = 115099552378053773561600805027724127595796638481650476626999444767493861143197
+ct = a37cc37e731f166ebcfaf0e005858cb90c443de1cdc5c22ea390adc358dedc96c07ac56471130a"""
+~~~
+
+###  题目分析       
+题目中的x,k都是可以直接得到的，而ct是m与key的前一部分(与m等长)异或得到的，题目还补充告诉我们p是素数,p模4余3，且        
+$$c \equiv x^2 \pmod p$$
+
+### 解题代码      
+~~~python
+from hashlib import sha256
+p = 115792089237316195423570985008687907853269984665640564039457584007913129639319
+c = 115099552378053773561600805027724127595796638481650476626999444767493861143197
+ct = bytes.fromhex("a37cc37e731f166ebcfaf0e005858cb90c443de1cdc5c22ea390adc358dedc96c07ac56471130a")
+x = ZZ(int.from_bytes(
+    sha256(b"quadratic-shadow-secret").digest(),
+    "big"
+) % (p - 1) + 1)
+#print(x)
+#108065791321956378604705304731818008043610974348047179968196353228821182508324
+key = sha256(str(x).encode()).digest()
+
+~~~
+
+
+
+
+
+
