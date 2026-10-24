@@ -216,8 +216,8 @@ S = bytes(c^^romio for c,romio in zip(c1,romio))
 Juliet = bytes(S1^^c for S1,c in zip(S,c2))
 print(Juliet.decode("utf-8"))
 ~~~
-### 运行结果  
-[运行结果]("https://github.com/user-attachments/assets/ef8a6063-1e54-4332-8b13-38aef5e27d2d")          
+### 运行结果   
+![运行结果]("https://github.com/user-attachments/assets/ef8a6063-1e54-4332-8b13-38aef5e27d2d")          
 ~~~python      
 老地方见，暗号是 SYC{black_dog_and_white_cat}。让我们一起改变这个世界
 ~~~      
@@ -292,7 +292,7 @@ print(key)
 flag = bytes(ct[i] ^^ key[i % len(key)] for i in range(len(ct)))
 print(flag) 
 ~~~
-[运行情况](https://github.com/user-attachments/assets/d71e8153-2dc2-4d4a-a7e0-89164a05fe1d")
+![运行情况](https://github.com/user-attachments/assets/d71e8153-2dc2-4d4a-a7e0-89164a05fe1d")
 最后的结果是：
 ~~~python
 b'SYC{quadratic_residue_Cryp0_1s_S0_Easy}'
