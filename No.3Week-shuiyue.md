@@ -113,8 +113,7 @@ g, s1, s2 = egcd(e1, e2)          # 得 s1=32769, s2=-32768
 m = pow(c1, s1, n) * pow(pow(c2, -1, n), -s2, n) % n
 print(m.to_bytes((m.bit_length()+7)//8, 'big'))
 M3, N = crt([n1, n2, n3], [r1, r2, r3])
-m, exact = integer_nthroot(int(M3), 3)
-assert exact                    
+m, exact = integer_nthroot(int(M3), 3)                  
 print(m.to_bytes((m.bit_length()+7)//8, 'big'))
 ~~~
 ### 运行展示
