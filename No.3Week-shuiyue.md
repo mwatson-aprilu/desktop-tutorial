@@ -200,5 +200,14 @@ NzM3OTZlNzQ3YjZjNjI2ODY1NWY2ZTcwNzA2MjY4NjE2NzVmNzU2ZTY2NWY2ZjcyNzI2MTVmNjY2ODY2
 ![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3image6.png)        
 但是flag提交失败了，说明说不定还有其他的解密(qaq)     
 
-我们再试一试Rot家族吧...
+我们再试一试Rot家族吧...   
+经检验:Rot47 暴力、ROT8000是乱码,不过Rot13暴力破解成功了：   
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3image6.png)     
+看Amount = 12的地方，得到了flag字样！    
+### 最终结果     
+~~~python
+NSSCTF{your_account_has_been_suspend}
+~~~
+
+
 
