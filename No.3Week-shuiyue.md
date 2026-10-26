@@ -107,9 +107,12 @@ g, s1, s2 = egcd(e1, e2)
 m = pow(c1, s1, n) * pow(pow(c2, -1, n), -s2, n) % n
 ~~~      
 得到前半部分的flag      
-~~~
+~~~python
 
-
+~~~       
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.2hf.png)          
+第二部分是低指数加密广播攻击,直接用crt解出m得到flag。
+最终的解题代码：      
 ~~~python
 from sympy.ntheory.modular import crt
 from sympy import integer_nthroot
