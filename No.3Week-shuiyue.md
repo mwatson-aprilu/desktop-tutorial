@@ -202,7 +202,7 @@ NzM3OTZlNzQ3YjZjNjI2ODY1NWY2ZTcwNzA2MjY4NjE2NzVmNzU2ZTY2NWY2ZjcyNzI2MTVmNjY2ODY2
 
 我们再试一试Rot家族吧...   
 经检验:Rot47 暴力、ROT8000是乱码,不过Rot13暴力破解成功了：   
-![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3image6.png)     
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.image7.png)     
 看Amount = 12的地方，得到了flag字样！    
 ### 最终结果     
 ~~~python
