@@ -144,13 +144,13 @@ xs = [
 ]
 ct = bytes.fromhex('e64444b4c0267505b820c8f17bac33d01a9909539c15a4284ee3d61c72f8dc7d785905426b4ac83096')
 ~~~
-这个题目真好，还告诉我们了LCG的运算方式，先看提示，题目说 $flag \oplus xs(s \geq 9) = ct$,那么显然有 $flag = xs \oplus ct$
+这个题目真好，还告诉我们了LCG的运算方式，先看提示，题目说 $flag \oplus xs(s \geq 9) = ct$ ,那么显然有 $flag = xs \oplus ct$
 接下来我们尝试得到x9以及之后的东西就好.
 想求x9...就必须知道a,c,m。由于     
 $x_{i}-x_{i-1} \equiv a \times (x_{i-1}-x_{i-2}) \pmod m$      
 让前后两个i构造出的式子左右颠倒相乘，我们可以得到：    
 $(x_{i-1} -x_{i-2})^2 \equiv (x_i -x_{i-1}) \times (x_{i-2} - x_{i-3}) \pmod m$       
-我们可以得到许多m的整数倍，(从$(x_2-x_1)^2- \cdots$ 到 $(x_7 -x_6)^2- \cdots$)    
+我们可以得到许多m的整数倍，(从 $(x_2-x_1)^2- \cdots$ 到 $(x_7 -x_6)^2- \cdots$)    
 他们应该不可能倍数之间全部不互质,我们对这些数取最大公因数，应该可以得到m。我们先试一下：   
 ~~~python 
 from gmpy2 import *
@@ -175,7 +175,7 @@ m = reduce(gcd,[mpz(mt[i]) for i in range(6)])
 print(m)
 ~~~
 经过对于代码笔误(i in(1,7))和知识性错误(gcd的使用)的调整，我们得到了最终的m,说明这个方法可行，然后我是先算a,构造出         
-$a \equiv (x_{i+1}-x_i) \times (x_i - x_{i-1})^{-1} \pmod m     
+$a \equiv (x_{i+1}-x_i) \times (x_i - x_{i-1})^{-1} \pmod m$     
 当然这个式子成立的前提是 $(x_i -x_{i-1})$ 不整除 $m$      
 我们尝试一下     
 ~~~python 
@@ -190,7 +190,7 @@ print(at2)
 
 然后最后一步：求c:      
 这个在知道a,m之后反而是最简单的一步了:      
-$$c \equiv a*x_i - x_{i+1} \pmod m
+$$c \equiv a*x_i - x_{i+1} \pmod m$$
 依旧取多个，以防万一    
 ~~~python
 cr = [(-a*xs[i]+xs[i+1])%m for i in range(7)]
