@@ -123,6 +123,135 @@ print(m.to_bytes((m.bit_length()+7)//8, 'big'))
 NSSCTF{c0mm0n_m'0dulus_4nd_h4st4d_br0adc4st_4r3_b0th_cl4ss1c_c0mb1n1ng_th3m_m4k3s_4_n1c3_m3d1um_ch4ll3ng3}
 ~~~
 
+## 4.Blind LCG 
+~~~python
+# LCG: x_{i+1} = (a * x_i + c) % m
+# 已知：前 8 个连续完整输出 xs（x0..x7），以及密文 ct
+# 未知：a, c, m 以及后续状态
+#
+# flag 与密钥流逐字节异或得到 ct。
+# 密钥流生成：从第 9 个输出开始，每个状态按 16 字节大端依次拼接，
+#             取前 len(flag) 字节。
+xs = [
+    187093231626415190397006950226417528969,
+    30103286419600105682593742410282123272,
+    32001963473511889640429721744769530549,
+    106413986871608818348263777824646659978,
+    181465356387857857790285722014503467717,
+    213903234706408075734187498535882737543,
+    120494196576286570145490725177434583305,
+    214818800428050166388193271405726058310,
+]
+ct = bytes.fromhex('e64444b4c0267505b820c8f17bac33d01a9909539c15a4284ee3d61c72f8dc7d785905426b4ac83096')
+~~~
+这个题目真好，还告诉我们了LCG的运算方式，先看提示，题目说 $flag \oplus xs(s \geq 9) = ct$,那么显然有 $flag = xs \oplus ct$
+接下来我们尝试得到x9以及之后的东西就好.
+想求x9...就必须知道a,c,m。由于     
+$x_{i}-x_{i-1} \equiv a \times (x_{i-1}-x_{i-2}) \pmod m$      
+让前后两个i构造出的式子左右颠倒相乘，我们可以得到：    
+$(x_{i-1} -x_{i-2})^2 \equiv (x_i -x_{i-1}) \times (x_{i-2} - x_{i-3}) \pmod m$       
+我们可以得到许多m的整数倍，(从$(x_2-x_1)^2- \cdots$ 到 $(x_7 -x_6)^2- \cdots$)    
+他们应该不可能倍数之间全部不互质,我们对这些数取最大公因数，应该可以得到m。我们先试一下：   
+~~~python 
+from gmpy2 import *
+from Crypto.Util.number import *
+from functools import reduce
+xs = [
+    187093231626415190397006950226417528969,
+    30103286419600105682593742410282123272,
+    32001963473511889640429721744769530549,
+    106413986871608818348263777824646659978,
+    181465356387857857790285722014503467717,
+    213903234706408075734187498535882737543,
+    120494196576286570145490725177434583305,
+    214818800428050166388193271405726058310,
+]
+ct = bytes.fromhex('e64444b4c0267505b820c8f17bac33d01a9909539c15a4284ee3d61c72f8dc7d785905426b4ac83096')
+mt = [0 for _ in range(6)]
+for i in range (1,6):
+  mt[i-1] = (xs[i+1] - xs[i])**2 - (xs[i+2]-xs[i+1])*(xs[i]-xs[i-1])
+#m = gcd(mpz(mt[i]) for i in range (6))   gcd只支持两个一起...
+m = reduce(gcd,[mpz(mt[i]) for i in range(6)])
+print(m)
+~~~
+经过对于代码笔误(i in(1,7))和知识性错误(gcd的使用)的调整，我们得到了最终的m,说明这个方法可行，然后我是先算a,构造出         
+$a \equiv (x_{i+1}-x_i) \times (x_i - x_{i-1})^{-1} \pmod m     
+当然这个式子成立的前提是 $(x_i -x_{i-1})$ 不整除 $m$      
+我们尝试一下     
+~~~python 
+at1 = [xs[i]-xs[i-1] for i in range(1,8)]
+at2 = []
+for i in range(6):
+  if gcd(at1[i],m) ==1:
+    at2.append(int(invert(at1[i],m))*at1[i+1]%m)      
+print(at2)
+~~~    
+如图，发现通过这个方法得到的6个备选的a都是相等的，我们随便取一个做a就好      
+
+然后最后一步：求c:      
+这个在知道a,m之后反而是最简单的一步了:      
+$$c \equiv a*x_i - x_{i+1} \pmod m
+依旧取多个，以防万一    
+~~~python
+cr = [(-a*xs[i]+xs[i+1])%m for i in range(7)]
+print(cr)
+~~~     
+看来是成功了     
+我们复原了公式，接下来就是算出x9之后的足够的xs,然后根据题意将他们每一个都转化成固定16字节(*state.to_bytes(16,'big')*)， 然后截取和ct相同长度的片段与ct异或，得到flag.    
+~~~python
+xi= [xs[7],]
+for i in range(100):
+  xi.append((xi[i]*a + c)%m)
+kstream = b''.join(state.to_bytes(16,'big')for state in xi[1:])
+kstream = kstream[ :len(ct)]
+flag = bytes(c^^k for c,k in zip(ct,kstream))
+print(flag)
+~~~
+最终解出flag(呼~~~OvO)
+~~~python
+b'NSSCTF{lcg_w1th_unkn0wn_m0dulus_rc0v3r3d}'
+~~~
+全部的解题代码展示：
+~~~python 
+from gmpy2 import *
+from Crypto.Util.number import *
+from functools import reduce
+xs = [
+    187093231626415190397006950226417528969,
+    30103286419600105682593742410282123272,
+    32001963473511889640429721744769530549,
+    106413986871608818348263777824646659978,
+    181465356387857857790285722014503467717,
+    213903234706408075734187498535882737543,
+    120494196576286570145490725177434583305,
+    214818800428050166388193271405726058310,
+]
+ct = bytes.fromhex('e64444b4c0267505b820c8f17bac33d01a9909539c15a4284ee3d61c72f8dc7d785905426b4ac83096')
+mt = [0 for _ in range(6)]
+for i in range (1,6):
+  mt[i-1] = (xs[i+1] - xs[i])**2 - (xs[i+2]-xs[i+1])*(xs[i]-xs[i-1])
+#m = gcd(mpz(mt[i]) for i in range (6))   gcd只支持两个一起...
+m = reduce(gcd,[mpz(mt[i]) for i in range(6)])
+#print(m)
+at1 = [xs[i]-xs[i-1] for i in range(1,8)]
+at2 = []
+for i in range(6):
+  if gcd(at1[i],m) ==1:
+    at2.append(int(invert(at1[i],m))*at1[i+1]%m)      
+#print(at2)
+a = at2[0]
+cr = [(-a*xs[i]+xs[i+1])%m for i in range(7)]
+#print(cr)
+c = cr[0]
+xi= [xs[7],]
+for i in range(100):
+  xi.append((xi[i]*a + c)%m)
+kstream = b''.join(state.to_bytes(16,'big')for state in xi[1:])
+kstream = kstream[ :len(ct)]
+flag = bytes(c^^k for c,k in zip(ct,kstream))
+print(flag)
+~~~
+
 ## 5.base 64 
 ### 题目代码   
 ~~~ python
