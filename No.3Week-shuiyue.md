@@ -93,6 +93,22 @@ c1 = m^e1 mod n
 c2 = m^e2 mod n
 ~~~
 e1,e2已知，由于使用欧几里得定理，并且e1,e2互素，可用扩展欧几里得算法得到s1,s2，使得 $e_1s_1 + e_2s_2 = 1$  ,可以得到  $s1 = 32769,s2 = 32768$    
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.3.image1.png)     
+然后让两个式子相乘    
+~~~text
+c1^s1 × c2^s2
+= m^(e1×s1) × m^(e2×s2)
+= m^(e1×s1+e2×s2)
+= m  (mod n)
+~~~
+吸取复习时的经验,由于s2为负数，故而我们要先求c2在n下的逆元：     
+~~~python
+g, s1, s2 = egcd(e1, e2)
+m = pow(c1, s1, n) * pow(pow(c2, -1, n), -s2, n) % n
+~~~      
+得到前半部分的flag      
+~~~
+
 
 ~~~python
 from sympy.ntheory.modular import crt
@@ -345,11 +361,12 @@ NzM3OTZlNzQ3YjZjNjI2ODY1NWY2ZTcwNzA2MjY4NjE2NzVmNzU2ZTY2NWY2ZjcyNzI2MTVmNjY2ODY2
 我们再试一试Rot家族吧...   
 经检验:Rot47 暴力、ROT8000是乱码,不过Rot13暴力破解成功了：   
 ![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.image7.png)     
-看Amount = 12的地方，得到了flag字样！    
+看Amount = 12的地方，得到了flag!   
 ### 最终结果     
 ~~~python
 NSSCTF{your_account_has_been_suspend}
 ~~~
+对于什么Rot的我其实了解比较少，没有系统学过，纯纯在CyberChef里面滥用工具,以后我去系统补一补....     
 
 
 
