@@ -122,3 +122,83 @@ print(m.to_bytes((m.bit_length()+7)//8, 'big'))
 ~~~python
 NSSCTF{c0mm0n_m'0dulus_4nd_h4st4d_br0adc4st_4r3_b0th_cl4ss1c_c0mb1n1ng_th3m_m4k3s_4_n1c3_m3d1um_ch4ll3ng3}
 ~~~
+
+## 5.base 64 
+### 题目代码   
+~~~ python
+# Custom Base64
+
+- 分类：Crypto / 编码
+- 难度：签到 ~ 简单
+
+提示：这是一段 Base64 数据，但用了一张被改动过的编码表。
+
+**密文：**
+
+```
+TOuiTz6pKVLNLaIvFVLvMaL3oH9NDQL1VyWrTW9OMn19=
+```
+
+**编码表（其中 4 个字符被隐去）：**
+
+```
+JASGBWcQPRXEFLbCDIlmnHUVKTYZdMovwipatNOefghq56rs****kxyz012789+/
+```
+
+请还原出明文。
+
+附件：`data.txt`
+~~~
+### 题目分析
+题目给了一个base64编码表，但是有4位被隐藏，那我们先把这四个找出来。    
+~~~python   
+program_list =list("JASGBWcQPRXEFLbCDIlmnHUVKTYZdMovwipatNOefghq56rskxyz012789+/")
+real_list = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+for ch in real_list:
+    check = 0
+    for i in range(60):  #64少了4个
+        if program_list[i] ==ch:
+            check = 1
+    if check == 0:
+        print(ch)
+~~~   
+###  运行情况   
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.image1.png)
+那么我们找到了缺失的字符 **j,u,3,4**
+由于只有这四个字符在编码表的位置不确定，于是我们就可以暴力求解（也只有24种）
+
+不过发现**ju34**就是最终的顺序(狗运中)    
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.image2.png)
+最终的flag就是    
+~~~python   
+NSSCTF{base64_1s_v3ry_e@sy_and_fuN}
+~~~    
+
+## 6.suspendNotice
+### 题目
+~~~python
+----------------------------------------
+AUTOMATED SYSTEM ATTACHMENT
+Content-Type: application/base64
+Content-Transfer-Encoding: base64
+X-Notice-ID: SUSPENDED-001
+
+NzM3OTZlNzQ3YjZjNjI2ODY1NWY2ZTcwNzA2MjY4NjE2NzVmNzU2ZTY2NWY2ZjcyNzI2MTVmNjY2ODY2NjM3MjYxNzE3ZA==
+----------------------------------------
+~~~
+
+### 思考
+这个题目提醒我们用Base64解码，我们试一下：    
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.image3.png)       
+这边貌似还是乱码呢...      
+难道还需要其他的编码表来解密吗,我们来try一try(瞎猫碰活耗子中)：     
+输出消失的：     
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.image5.png)
+输出不变的：
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.image4.png)
+输出看上去像的：
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.image6.png)
+但是flag提交失败了，说明说不定还有其他的解密(qaq)
+
+我们再试一试Rot家族吧...
+
