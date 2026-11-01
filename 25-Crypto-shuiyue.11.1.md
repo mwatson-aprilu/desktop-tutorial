@@ -108,15 +108,15 @@ P3 = role=guest;\x05\x05\x05\x05\x05
 AES-CBC 解密满足：
 ~~~text
 P3 = AES_DEC(C3) XOR C2
-```
-因此，不需要知道 AES 密钥，只需修改 *'C2'* 中与 *'guest'* 对应的 5 个字节：
+~~~        
+因此，不需要知道 AES 密钥，我们只需要修改 *'C2'* 中与 *'guest'* 对应的 5 个字节：
 ~~~text
 C2'[5:10] = C2[5:10] XOR guest XOR admin
 ~~~
 修改后第三组明文会变成：
-~~~text
+~~~text       
 role=admin;
-~~~
+~~~     
 第二组 `auditid` 会受到影响，但题目说明该字段不参与授权判断，最后一组的 PKCS#7 填充也不会被破坏。
 ~~~python
 import base64
