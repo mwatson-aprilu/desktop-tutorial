@@ -2,6 +2,7 @@
 # ZeroG-零重力CTF
 ## 小小的 e     
 ### 题目分析       
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.f1.png)      
 这个题目给出了n,e,c，并且这个e非常小，n远大于c，有 $m^e \equiv c \pmod n$ 那么直接考虑直接开方得到m，我们直接试：          
 ~~~python
 n = Integer(b435a6b2f0f4784e92c05065c35b892ab39e62618a77f4b907b7532425da3c66f78a777c462038eec88b343f46aaf0a425fcffe234b93ae2e13b812e4d291241c00b7a5832ac0194455d4242c47d56760cd0ea0193f563a49c978ed79c8315f22ec47ba0768e86796d5420cb1a6d62d5aaef124482bf9151dcd0c36e34576f6bc1fe744607b4cf34e6b218f27b3692f56e3f66cb9c6c6b06d51527b9453eb1a1e5aee4f028e7093d996d61ff70f10eb265778165750178e197939dfa30c2956599e49ba3434052b3caa041409b101adde35b0cc6b85e1f7521933261edbc1ad324108fc4e99bb811d014b117bfdfe16a9b935d734abc289171e3dc4c5322a1e916)
@@ -19,17 +20,20 @@ m = c.nth_root(e)
 assert m^e == c
 print(m)
 ~~~
-最后我们得到了m:
+最后我们得到了m:      
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.f2.png)
 ~~~python
 12654036686553401130233894101451865273996171008268171510428441696119666706164909404693365984934821455229
 ~~~
 输入网站中的对话框得到flag     
+
 故而本题目的flag为    
 ~~~python     
 ZeroG{26809129-3a72-4596-8fe2-b2e88ae554ae}
 ~~~    
 ## CommonModules   
 ### 题目        
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.f4.png)         
 ~~~python    
 n = 70368691555309388686246014163938738193325633005053028952725423254610314696450111488853920284327028222122549032107350551888124201080554781155503917489442529615927210246350205575098017647302372626168772961314853960928522146645641305873773053566675343007864527319328589611978663313778365554848096636825533421207
 e1 = 17
@@ -74,11 +78,12 @@ if s2 < 0:
 m = (pow(c1, s1, n) * pow(c2, s2, n)) % n
 flag = long_to_bytes(m)
 print(flag)
-~~~
+~~~        
 最后得到了flag:     
-~~~python    
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.f3.png)       
+~~~python      
 b'flag{e14dcc45-c91d-4209-b27e-e6f2d09256e4}'
-~~~
+~~~     
 
 ## Stage2 身份危机
 ### 题目 
