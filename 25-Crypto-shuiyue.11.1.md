@@ -137,8 +137,14 @@ forg_token = base64.b64encode(raw).decode()
 
 print(forg_token)
 ```
-最终得到了     
+最终得到了伪造的token           
 ```text
 2JRDUwfO0DTLr1S1x8o+2m0XdYNVEqBrZOZwI+RtCSFoXITJ4CEEG1IILvqP436+8Ffy4x3zh2ygFtine0Zu+g==
-```    
+```
+然后我们去管理员验证台，把得到的假token粘贴进去,得到了flag:     
+~~~text
+flag": "ZeroG{05db3959-949d-4eb9-8498-d1aa63083a04}
+~~~
+
+
 
