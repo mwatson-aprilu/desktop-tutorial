@@ -93,32 +93,32 @@ b'flag{e14dcc45-c91d-4209-b27e-e6f2d09256e4}'
 ![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.f6.png)     
 ![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.f8.png)      
 已知明文结构，Token 解码后的结构为：    
-```text
+~~~text
 IV || C1 || C2 || C3
-```
+~~~
 对应的三个明文分组为：
-```text
+~~~text
 P1 = uid=0788552954;#
 P2 = auditid=9b758da3
 P3 = role=guest;\x05\x05\x05\x05\x05
-```
+~~~
 目标是把第三组中的 `guest` 改为等长的 `admin`。
-## 攻击原理
+### 攻击原理
 题目提醒过我们说是AES-CBC，      
 AES-CBC 解密满足：
-```text
+~~~text
 P3 = AES_DEC(C3) XOR C2
 ```
-因此，不需要知道 AES 密钥，只需修改 `C2` 中与 `guest` 对应的 5 个字节：
-```text
+因此，不需要知道 AES 密钥，只需修改 *'C2'* 中与 *'guest'* 对应的 5 个字节：
+~~~text
 C2'[5:10] = C2[5:10] XOR guest XOR admin
-```
+~~~
 修改后第三组明文会变成：
-```text
+~~~text
 role=admin;
-```
+~~~
 第二组 `auditid` 会受到影响，但题目说明该字段不参与授权判断，最后一组的 PKCS#7 填充也不会被破坏。
-```python
+~~~python
 import base64
 from operator import xor
 
@@ -139,13 +139,14 @@ for i, (obyte, newbyte) in enumerate(zip(orole, newrole)):
 forg_token = base64.b64encode(raw).decode()
 
 print(forg_token)
-```
+~~~
 最终得到了伪造的token        
-![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.f7.png)
-```text
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.f7.png)       
+~~~text
 2JRDUwfO0DTLr1S1x8o+2m0XdYNVEqBrZOZwI+RtCSFoXITJ4CEEG1IILvqP436+8Ffy4x3zh2ygFtine0Zu+g==
-```      
+~~~     
 然后我们去管理员验证台，把得到的假token粘贴进去,得到了flag:     
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.f9.png)    
 ~~~text
 flag": "ZeroG{05db3959-949d-4eb9-8498-d1aa63083a04}
 ~~~
