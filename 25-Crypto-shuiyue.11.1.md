@@ -85,11 +85,14 @@ print(flag)
 b'flag{e14dcc45-c91d-4209-b27e-e6f2d09256e4}'
 ~~~     
 
-## Stage2 身份危机
+## Stage2 身份危机        
+
 ### 题目 
 跳转到题目界面之后题目给了这些   
-
-已知明文结构，Token 解码后的结构为：
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.f5.png)      
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.f6.png)     
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.f8.png)      
+已知明文结构，Token 解码后的结构为：    
 ```text
 IV || C1 || C2 || C3
 ```
@@ -137,10 +140,11 @@ forg_token = base64.b64encode(raw).decode()
 
 print(forg_token)
 ```
-最终得到了伪造的token           
+最终得到了伪造的token        
+![运行情况](https://cdn.jsdelivr.net/gh/mwatson-aprilu/images@main/Week3.f7.png)
 ```text
 2JRDUwfO0DTLr1S1x8o+2m0XdYNVEqBrZOZwI+RtCSFoXITJ4CEEG1IILvqP436+8Ffy4x3zh2ygFtine0Zu+g==
-```
+```      
 然后我们去管理员验证台，把得到的假token粘贴进去,得到了flag:     
 ~~~text
 flag": "ZeroG{05db3959-949d-4eb9-8498-d1aa63083a04}
