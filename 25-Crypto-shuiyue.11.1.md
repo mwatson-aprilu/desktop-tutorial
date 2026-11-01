@@ -87,5 +87,58 @@ b'flag{e14dcc45-c91d-4209-b27e-e6f2d09256e4}'
 
 ## Stage2 身份危机
 ### 题目 
-跳转到题目界面之后
+跳转到题目界面之后题目给了这些   
+
+已知明文结构，Token 解码后的结构为：
+```text
+IV || C1 || C2 || C3
+```
+对应的三个明文分组为：
+```text
+P1 = uid=0788552954;#
+P2 = auditid=9b758da3
+P3 = role=guest;\x05\x05\x05\x05\x05
+```
+目标是把第三组中的 `guest` 改为等长的 `admin`。
+## 攻击原理
+题目提醒过我们说是AES-CBC，      
+AES-CBC 解密满足：
+```text
+P3 = AES_DEC(C3) XOR C2
+```
+因此，不需要知道 AES 密钥，只需修改 `C2` 中与 `guest` 对应的 5 个字节：
+```text
+C2'[5:10] = C2[5:10] XOR guest XOR admin
+```
+修改后第三组明文会变成：
+```text
+role=admin;
+```
+第二组 `auditid` 会受到影响，但题目说明该字段不参与授权判断，最后一组的 PKCS#7 填充也不会被破坏。
+```python
+import base64
+from operator import xor
+
+token = "2JRDUwfO0DTLr1S1x8o+2m0XdYNVEqBrZOZwI+RtCSFoXITJ4CcVE0gSLvqP436+8Ffy4x3zh2ygFtine0Zu+g=="
+
+raw = bytearray(base64.b64decode(token))
+
+orole = b"guest"
+newrole = b"admin"
+
+# raw = IV(16) || C1(16) || C2(16) || C3(16)
+# role=guest; 中，guest 在 P3 内的偏移为 5
+offset = 16 + 16 + len(b"role=")
+
+for i, (obyte, newbyte) in enumerate(zip(orole, newrole)):
+    raw[offset + i] = raw[offset + i]^^(obyte^^newbyte)
+
+forg_token = base64.b64encode(raw).decode()
+
+print(forg_token)
+```
+最终得到了     
+```text
+2JRDUwfO0DTLr1S1x8o+2m0XdYNVEqBrZOZwI+RtCSFoXITJ4CEEG1IILvqP436+8Ffy4x3zh2ygFtine0Zu+g==
+```    
 
